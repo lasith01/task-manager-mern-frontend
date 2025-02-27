@@ -8,12 +8,22 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchTasks = async () => {
-            const response = await url.get('/tasks');
-            setTasks(response.data);
+            if (!user) return; 
+
+            try {
+                const response = await url.get('/tasks', {
+                    headers: {
+                        Authorization: `${user.token}`, 
+                    }
+                });
+                setTasks(response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
         };
 
         fetchTasks();
-    }, []);
+    }, [user]); 
 
     const handleLogout = () => {
         logout();
@@ -21,14 +31,20 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h2>Welcome, {user.name}</h2>
-            <button onClick={handleLogout}>Logout</button>
-            <h3>Your Tasks</h3>
-            <ul>
-                {tasks.map(task => (
-                    <li key={task._id}>{task.title}</li>
-                ))}
-            </ul>
+            {user ? (
+                <>
+                    <h2>Welcome, {user.name}</h2>
+                    <button onClick={handleLogout}>Logout</button>
+                    <h3>Your Tasks</h3>
+                    <ul>
+                        {tasks.map(task => (
+                            <li key={task._id}>{task.title}</li>
+                        ))}
+                    </ul>
+                </>
+            ) : (
+                <h2>Loading...</h2>
+            )}
         </div>
     );
 };
