@@ -3,7 +3,7 @@ import url from '../API/ApiService';
 
 const AuthContext = createContext();
 
-export const useAth =() =>{
+export const useAuth =() =>{
     return useContext(AuthContext);
 };
 
@@ -25,6 +25,11 @@ export const AuthProvider = ({children}) => {
     const login = (userData, token) => {
         localStorage.setItem('token',token);
         setUser(userData);
+    };
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        setUser(null);
     };
 
     return(

@@ -1,13 +1,10 @@
 import axios from 'axios';
 
-const url = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-});
+const API_BASE_URL = "http://localhost:5000/api"; 
 
-url.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) config.headers.Authorization = `${token}`;
-    return config;
-}, (error) => Promise.reject(error));
+const url = axios.create({
+    baseURL: API_BASE_URL,
+    headers: { "Content-Type": "application/json" }
+});
 
 export default url;
