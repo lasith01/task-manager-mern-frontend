@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import url from '../API/ApiService';
 import { useNavigate } from 'react-router-dom';
+import '../css/login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -22,24 +23,31 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            {error && <p>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <input 
-                    type="email" 
-                    placeholder="Email" 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
-                />
-                <input 
-                    type="password" 
-                    placeholder="Password" 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                />
-                <button type="submit">Login</button>
-            </form>
+        <div className="container">
+            <div className="login-form">
+                <h2 className="title">Login</h2>
+                {error && <p className="error">{error}</p>}
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="email"
+                        className="input"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        className="input"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type="submit" className="btn">Login</button>
+                </form>
+                <p className="register-text">
+                    Don't have an account? <a href="/register">Register</a>
+                </p>
+            </div>
         </div>
     );
 };
